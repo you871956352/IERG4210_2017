@@ -1,0 +1,12 @@
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+ }
+.black{
+    color:black;
+}
+
+.number{
+    width: 25px;
+    text-align: center;
+}
