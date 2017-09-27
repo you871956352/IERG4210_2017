@@ -1,12 +1,28 @@
 .dropdown:hover .dropdown-menu {
     display: block;
     margin-top: 0;
- }
-.black{
-    color:black;
 }
 
-.number{
+.black {
+    color: black;
+}
+
+.number {
     width: 25px;
     text-align: center;
+}
+
+.cko {
+    color: white;
+    width: inherit;
+    margin: auto;
+    background-color: #007bff;
+    border-color: #007bff;
+    border-radius: .25rem;
+}
+
+.cko:hover {
+  color: #fff;
+  background-color: #0069d9;
+  border-color: #0062cc;
 }
