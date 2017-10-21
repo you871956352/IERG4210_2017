@@ -26,3 +26,21 @@
   background-color: #0069d9;
   border-color: #0062cc;
 }
+
+fieldset { 
+    display: block;
+    margin-left: 2px;
+    margin-right: 2px;
+    padding-bottom: 3em;
+    padding-left: 2em;
+    padding-right: 2em;
+    border: 2px groove (internal value);
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
