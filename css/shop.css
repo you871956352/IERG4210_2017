@@ -22,12 +22,12 @@
 }
 
 .cko:hover {
-  color: #fff;
-  background-color: #0069d9;
-  border-color: #0062cc;
+    color: #fff;
+    background-color: #0069d9;
+    border-color: #0062cc;
 }
 
-fieldset { 
+fieldset {
     display: block;
     margin-left: 2px;
     margin-right: 2px;
@@ -43,4 +43,14 @@ fieldset {
 
 .show {
     display: block;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.mb-6{
+    margin-bottom: 6rem!important;
 }

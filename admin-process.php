@@ -24,7 +24,7 @@ function ierg4210_prod_insert() {
     // input validation or sanitization
     if (!preg_match('/^[\w\- ]+$/', $_POST['name']))
         throw new Exception("invalid-name");
-    if (!preg_match('/^[\w\-,\. ]+$/', $_POST['description']))
+    if (!preg_match('/^[\w\-,\.\' ]+$/', $_POST['description']))
         throw new Exception("invalid-description");
 
     // DB manipulation
@@ -58,7 +58,7 @@ function ierg4210_prod_edit() {
     // input validation or sanitization
     if (!preg_match('/^[\w\- ]+$/', $_POST['name']))
         throw new Exception("invalid-name");
-    if (!preg_match('/^[\w\-,\. ]+$/', $_POST['description']))
+    if (!preg_match('/^[\w\-,\.\' ]+$/', $_POST['description']))
         throw new Exception("invalid-description");
 
     // DB manipulation
