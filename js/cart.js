@@ -2,27 +2,12 @@ function reload_Cart() {
     var tempCart;
     if (localStorage.cart != undefined)
         tempCart = JSON.parse(localStorage.cart);
-    else return;
-    /*
-    var content = "<div class=\"container\"><ul class=\"list-inline dropdown-item\"><li class=\"list-inline-item\">Product</li><li class=\"list-inlin-item\">Price</li><li class=\"list-inline-item\">Count</li><li class=\"list-inline-item\">subTotal</li></ul>";
-    var total = 0;
-    var totalForOnePro = 0;
-    for (var p in tempCart) {
-        totalForOnePro = tempCart[p].num * tempCart[p].price;
-        content += "<ul class=\"list-inline dropdown-item\"><li class=\"list-inline-item\">" + tempCart[p].name + "</li><li class=\"list-inline-item\">$" + tempCart[p].price + "</li>" +
-            "<li class=\"list-inline-item\"><input type=\"button\" value=\"-\" onclick=\"updatePrice(" + p + ",this.nextElementSibling.value-1)\" />" +
-            "<input class=\"count\" type=\"text\" readonly=\"readonly\" value=" + tempCart[p].num + " onchange=\"updatePrice(" + p + ",this.value)\" />" +
-            "<input type=\"button\" value=\"+\" onclick=\"updatePrice(" + p + ",Number(this.previousElementSibling.value)+1)\" /></li>" +
-            "<li class=\"list-inline-item\">$" + totalForOnePro + "</li>" +
-            "<li class=\"list-inline-item\"><button id=\"remove\" onclick=\'removeProduct(" + p + ")\'>Remove</li></ul>";
-        total += totalForOnePro;
-    }
-    
-    content += "</div>";
-    content += "<p class=\"dropdown-item\">Total: $" + total + "</p>";
-    content += "<br><button class=\"dropdown-item cko\" id=\"checkout\" onclick='checkOut()'>Checkout</button>";
-    document.getElementById("cartUL").innerHTML = content;
-    */
+    else {
+        var cart = {};
+        localStorage.cart = JSON.stringify(cart);
+        tempCart = JSON.parse(localStorage.cart);
+    };
+
     var content = "<table><tr><th>Product</th><th>Price</th><th>Count</th><th>subTotal</th></tr>";
     var total = 0;
     var totalForOnePro = 0;
