@@ -40,16 +40,11 @@
 
                     <li class="nav-item">
                         <div class="dropdown">
-                            <a class="nav-link dropdown-toggle" id="dropdownMenuButton" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shopping-list</a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item">Shopping-Cart (Total:$2.0)</a>
-                                <a class="dropdown-item">ProductA1 &nbsp;<input class="number" type=text value="1"> &nbsp;@1.0</a>
-                                <a class="dropdown-item">ProductA2 &nbsp;<input class="number" type=text value="1"> &nbsp;@0.5</a>
-                                <a><input class="dropdown-item cko" type="button" value="Check Out"></a>
-                            </div>
+                            <a class="nav-link dropdown-toggle" id="dropdownMenuButton" href="#" data-toggle="dropdown">Shopping-list</a>
+                            <div class="dropdown-menu" id="cartUL"></div>
                         </div>
                     </li>
-                    
+
                     <li class="nav-item">
                         <a class="nav-link" href="admin.html">AdminPage</a>
                     </li>
@@ -124,7 +119,7 @@
                     </div>
 
                     <div class="row">
-                                    <?php
+                        <?php
                                     if($catid == null){
                                         $q = $db->query("SELECT pid FROM products WHERE pid <= 6");
 				                        $prod_pid = $q->fetchAll(PDO::FETCH_COLUMN, 0);
@@ -145,7 +140,7 @@
                                             <h4 class="card-title"><a href="product.php?pid='.$prod_pid[$i].'&catid='.$prod_catid[$i].'">Product '.$prod_name[$i].'</a></h4>
                                             <h6 class="card-subtitle text-muted">Price $'.$prod_price[$i].'</h6>
                                             <p class="card-text">'.$prod_desc[$i].'</p>
-                                            <a href="#" class="btn btn-primary">Add to Cart</a>
+                                            <a href="#" class="btn btn-primary" onclick="addToCart('.$prod_pid[$i].')">Add to Cart</a>
                                             </div>
                                             </div>
                                             </div>
@@ -171,7 +166,7 @@
                                             <h4 class="card-title"><a href="product.php?pid='.$prod_pid[$i].'&catid='.$prod_catid[$i].'">Product '.$prod_name[$i].'</a></h4>
                                             <h6 class="card-subtitle text-muted">Price $'.$prod_price[$i].'</h6>
                                             <p class="card-text">'.$prod_desc[$i].'</p>
-                                            <a href="#" class="btn btn-primary">Add to Cart</a>
+                                            <a href="#" class="btn btn-primary" onclick="addToCart('.$prod_pid[$i].')">Add to Cart</a>
                                             </div>
                                             </div>
                                             </div>
@@ -206,6 +201,9 @@
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/popper/popper.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/myLib.js"></script>
+        <script type="text/javascript" src="js/cart.js"></script>
+
     </body>
 
     </html>

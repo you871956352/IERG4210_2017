@@ -51,6 +51,38 @@ fieldset {
     width: 100%;
 }
 
-.mb-6{
+.mb-6 {
     margin-bottom: 6rem!important;
+}
+
+input.count {
+    width: 40%;
+    text-align: center;
+}
+
+input.min {
+    text-align: center;
+    width: 30%;
+}
+
+input.add {
+    text-align: center;
+    width: 30%;
+}
+
+.total {
+    text-align: center;
+}
+
+tr th{
+    text-align: center;
+    padding: 0px 15px;
+}
+
+tr td{
+    text-align: center;
+}
+
+#remove{
+    margin-right: 15px;
 }

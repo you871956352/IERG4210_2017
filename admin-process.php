@@ -1,6 +1,16 @@
 <?php
 include_once('lib/db.inc.php');
 
+function ierg4210_prod_fetchByPid() {
+    //DB manipulation
+    global $db;
+    $db = ierg4210_DB();
+    $PID = $_GET['pID'];
+    $q = $db->prepare("SELECT name,price FROM products WHERE pid = $PID");
+    if ($q->execute())
+        return $q->fetchAll();
+}
+
 function ierg4210_cat_fetchall() {
 	// DB manipulation
 	global $db;
