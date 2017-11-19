@@ -1,4 +1,40 @@
 <?php
+
+    include_once('lib/db.inc.php');
+	include_once('lib/csrf.php');
+	session_regenerate_id();
+
+	function loggedin()
+	{
+		if (!empty($SESSION['t4210']))
+			return $_SESSION['t4210']['em'];
+		if (!empty($_COOKIE['t4210'])) {
+			// stripslashes returns a string with backslashes stripped off.
+			//(\' becomes ' and so on)
+			if ($t = json_decode(stripslashes($_COOKIE['t4210']), true)) {
+				if (time() > $t['exp']) return false;
+				$db = ierg4210_DB();
+				$q = $db->prepare("SELECT * FROM account WHERE email = ?");
+				$q->execute(array($t['em']));
+				if ($r = $q->fetch()) {
+					$realk = hash_hmac('sha1', $t['exp'] . $r['password'], $r['salt']);
+					if ($realk == $t['k']) {
+						$_SESSION['t4210'] = $t;
+						return $t['em'];
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	if (!loggedin()) {
+		// redirect to login
+		header('Location:login.php');
+		exit();
+	}
+
+
     parse_str($_SERVER['QUERY_STRING']);
 	$db = new PDO('sqlite:/var/www/cart.db');
 
@@ -51,14 +87,19 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="admin.html">AdminPage</a>
+                        <a class="nav-link" href="admin.php">AdminPage</a>
                     </li>
-
+                    <li class="nav-item">
+                        <a class="nav-link">LogOut</a>
+                    </li> 
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><img src="/img/Search-button.png" width="15"></button>
+                
+                <form class="form-inline my-2 my-lg-0" method="POST" action="auth-process.php?action=<?php echo ($action = 'logout'); ?>">
+                    <input class="username form-control mr-sm-2" type="text" readonly="readonly" value="<?php echo loggedin();?>" />
+                    <input class="btn btn-outline-success my-2 my-sm-0 logoutForm" type="submit" value="Log Out" />
+                    <input type="hidden" name="nonce" value="<?php echo csrf_getNonce($action); ?>" />
                 </form>
+                
             </div>
         </nav>
 

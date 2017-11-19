@@ -1,5 +1,40 @@
 <?php
+
 include_once('lib/db.inc.php');
+include_once('lib/csrf.php');
+
+//Account authentication.
+function loggedin()
+{
+    if (!empty($SESSION['t4210']))
+        return $_SESSION['t4210']['em'];
+    if (!empty($_COOKIE['t4210'])) {
+        // stripslashes returns a string with backslashes stripped off.
+        //(\' becomes ' and so on)
+        if ($t = json_decode(stripslashes($_COOKIE['t4210']), true)) {
+            if (time() > $t['exp']) return false;
+            $db = ierg4210_DB();
+            $q = $db->prepare("SELECT * FROM account WHERE email = ?");
+            $q->execute(array($t['em']));
+            if ($r = $q->fetch()) {
+                $realk = hash_hmac('sha1', $t['exp'] . $r['password'], $r['salt']);
+                if ($realk == $t['k']) {
+                    $_SESSION['t4210'] = $t;
+                    return $t['em'];
+                }
+            }
+        }
+    }
+    return false;
+}
+
+if (!loggedin()) {
+    // redirect to login
+    header('Location:login.php');
+    exit();
+}
+
+//Data process.
 
 function ierg4210_prod_fetchByPid() {
     //DB manipulation

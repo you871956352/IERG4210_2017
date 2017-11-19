@@ -1,5 +1,4 @@
 <?php
-session_start();
 include_once('lib/db.inc.php');
 include_once('lib/csrf.php');
 
