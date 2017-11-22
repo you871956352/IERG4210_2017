@@ -89,9 +89,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="admin.php">AdminPage</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link">LogOut</a>
-                    </li> 
+
                 </ul>
                 
                 <form class="form-inline my-2 my-lg-0" method="POST" action="auth-process.php?action=<?php echo ($action = 'logout'); ?>">
