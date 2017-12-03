@@ -90,12 +90,12 @@ function ierg4210_prod_insert() {
         // Note: Take care of the permission of destination folder (hints: current user is apache)
         if (move_uploaded_file($_FILES["file"]["tmp_name"], "img/" . $lastId . ".jpg")) {
             header('Content-Type: text/html; charset=utf-8');
-            echo 'Insert succeeded. <br/>Product name : ' . $_POST['name'] . '<br/><a href="admin.html">Back to admin panel.</a>';
+            echo 'Insert succeeded. <br/>Product name : ' . $_POST['name'] . '<br/><a href="admin.php">Back to admin panel.</a>';
             exit();
         }
     }
     header('Content-Type: text/html; charset=utf-8');
-    echo 'Invalid picture. <br/><a href="admin.html">Back to admin panel.</a>';
+    echo 'Invalid picture. <br/><a href="admin.php">Back to admin panel.</a>';
     exit();
 }    
 
@@ -122,7 +122,7 @@ function ierg4210_prod_edit() {
         // Note: Take care of the permission of destination folder (hints: current user is apache)
         if (move_uploaded_file($_FILES["file"]["tmp_name"], "img/" . $pid . ".jpg")) {
             header('Content-Type: text/html; charset=utf-8');
-            echo 'Edit succeeded. <br/>Product name : ' . $_POST['name'] . '<br/><a href="admin.html">Back to admin panel.</a>';
+            echo 'Edit succeeded. <br/>Product name : ' . $_POST['name'] . '<br/><a href="admin.php">Back to admin panel.</a>';
             exit();
         }
     }
@@ -132,7 +132,7 @@ function ierg4210_prod_edit() {
 
     // To replace the content-type header which was json and output an error message
     header('Content-Type: text/html; charset=utf-8');
-    echo 'Invalid picture. <br/><a href="admin.html">Back to admin panel.</a>';
+    echo 'Invalid picture. <br/><a href="admin.php">Back to admin panel.</a>';
     exit();
 }
 
@@ -147,7 +147,7 @@ function ierg4210_prod_delete() {
     $q->execute(array($_POST['pid']));
     
     header('Content-Type: text/html; charset=utf-8');
-    echo 'Deletion succeeded. <br/><a href="admin.html">Back to admin panel.</a>';
+    echo 'Deletion succeeded. <br/><a href="admin.php">Back to admin panel.</a>';
     exit();
 }
 
@@ -164,7 +164,7 @@ function ierg4210_cat_insert() {
 	$q->execute(array($_POST['cat_name']));
     
     header('Content-Type: text/html; charset=utf-8');
-    echo 'Insert succeeded. <br/><a href="admin.html">Back to admin panel.</a>';
+    echo 'Insert succeeded. <br/><a href="admin.php">Back to admin panel.</a>';
     exit();
 }
 
@@ -188,7 +188,7 @@ function ierg4210_cat_delete() {
 	$q->execute(array($_POST['catid']));
      
     header('Content-Type: text/html; charset=utf-8');
-    echo 'Deletion succeeded. <br/><a href="admin.html">Back to admin panel.</a>';
+    echo 'Deletion succeeded. <br/><a href="admin.php">Back to admin panel.</a>';
     exit();
 }
 
@@ -206,7 +206,7 @@ function ierg4210_cat_edit() {
     $q->execute(array($_POST['name']));
     
     header('Content-Type: text/html; charset=utf-8');
-    echo 'Edit succeeded. <br/><a href="admin.html">Back to admin panel.</a>';
+    echo 'Edit succeeded. <br/><a href="admin.php">Back to admin panel.</a>';
     exit();
 }
 
