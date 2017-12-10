@@ -1,8 +1,43 @@
 <?php
+    define("LOG_FILE", "/var/www/auth.log");
     session_start();
     include_once('lib/db.inc.php');
     global $db;
     $db = ierg4210_DB();
+
+    function ierg4210_signup(){
+        //echo "<script>alert(\"ds\")</script>";
+        if (empty($_POST['email']) || empty($_POST['pw'])
+            || !preg_match('/^[\w_]+@[\w]+(\.[\w]+){0,2}(\.[\w]{2,6})$/', $_POST['email'])
+            || !preg_match('/^[A-Za-z_\d]{2,19}$/', $_POST['pw']))
+            throw new Exception('Wrong Credentials');
+
+        // Implement the login logic here
+        else {
+            global $db;
+            $db = ierg4210_DB();
+            $email = $_POST['email'];
+            $password = $_POST['pw'];
+            $hash_pw = hash_pw($password);
+            
+            
+            try {
+                $q = $db->prepare("INSERT INTO account (email,salt,password) VALUES (?,?,?)");
+                $q->bindParam(1,$email);
+                $q->bindParam(2,$hash_pw[0]);
+                $q->bindParam(3,$hash_pw[1]);
+                $q->execute();
+                
+                header('Content-Type: text/html; charset=utf-8');
+                echo 'Signup success. <br/><a href="login.php">Back to login page.</a>';
+                //echo 'email'.$email.'salt'.$hash_pw[0].'password'.$hash_pw[1];
+                exit();
+            }catch (Exception $e){
+                echo $e->getMessage();
+                exit();
+            }
+        }
+    }
 
     function ierg4210_login(){
         //echo "<script>alert(\"ds\")</script>";
@@ -103,5 +138,74 @@
     catch(Exception $e) {
         header('Refresh: 10; url=login.php?error=' . $e->getMessage());
         echo '<strong>Error Occurred:</strong> ' . $e->getMessage() . '<br/>Redirecting to login page in 10 seconds...';
+    }
+
+    function hash_pw($password){
+        $salt = mt_rand();
+        $hash = hash_hmac('sha1', $password, $salt);
+        $a = array($salt,$hash);
+        return $a;
+    }
+
+    function ierg4210_changePwd() {
+        $email = $_POST['user_email'];
+        $old_pw = $_POST['old_pw'];
+        $new_pw = $_POST['new_pw'];
+        $r_new_pw = $_POST['r_new_pw'];
+
+        error_log(date("Y-m-d H:i:s"). "email:" .$email.";old".$old_pw.";new1:".$new_pw.";r_new:".$r_new_pw.PHP_EOL, 3, LOG_FILE);
+
+        if (empty($email) || empty($old_pw) || empty($new_pw) || empty($r_new_pw)
+            || !preg_match('/^[\w_]+@[\w]+(\.[\w]+){0,2}(\.[\w]{2,6})$/', $email)
+            || !preg_match('/^[A-Za-z_\d]{2,19}$/', $old_pw) || !preg_match('/^[A-Za-z_\d]{2,19}$/', $new_pw)
+            || !preg_match('/^[A-Za-z_\d]{2,19}$/', $r_new_pw))
+        {
+            header('Location:change_pwd.php', true, 302);
+//            throw new Exception('Wrong Credentials');
+            error_log(date("Y-m-d H:i:s"). "Wrong Credentials" . PHP_EOL, 3, LOG_FILE);
+        }
+        else if ($new_pw != $r_new_pw)
+        {
+            header('Content-Type: text/html; charset=utf-8');
+            echo 'Two new passwords are different. <br/><a href="change_pwd.php">Back to password change page.</a>';
+            
+//            throw new Exception('Two new passwords are different');
+            error_log(date("Y-m-d H:i:s"). "Two new passwords are different" . PHP_EOL, 3, LOG_FILE);
+        }
+        else {
+            global $db;
+            $db = ierg4210_DB();
+
+            $q = $db->prepare("SELECT * FROM account WHERE email = ?");
+            $q->execute(array($email));
+            $r = $q->fetch();
+            if (empty($r)) { // wrong email
+                header('Content-Type: text/html; charset=utf-8');
+                echo 'Wrong account! <br/><a href="change_pwd.php">Back to password change page.</a>';
+                
+                error_log(date("Y-m-d H:i:s"). "Wrong Account!" . PHP_EOL, 3, LOG_FILE);
+//                throw new Exception('Wrong Account!');
+            }
+            else { // email exists
+                $salt = $r['salt'];
+                $savedPwd = $r['password'];
+                $sh_pwd = hash_hmac('sha1', $old_pw, $salt);
+                if ($savedPwd == $sh_pwd) { //true old password
+                    $new_salt = mt_rand();
+                    $sh_new_pwd = hash_hmac('sha1', $new_pw, $new_salt);
+
+                    $q = $db->prepare("UPDATE account SET password=?, salt=? WHERE email = ?");
+                    $q->execute(array($sh_new_pwd, $new_salt, $email));
+                    ierg4210_logout();
+                }
+                else {
+                    header('Content-Type: text/html; charset=utf-8');
+                    echo 'Wrong password! <br/><a href="change_pwd.php">Back to password change page.</a>';
+                    
+                    error_log(date("Y-m-d H:i:s"). "Wrong password!" . PHP_EOL, 3, LOG_FILE);
+                    //throw new Exception('Wrong password');
+                }
+            }
+        }
     }
 ?>

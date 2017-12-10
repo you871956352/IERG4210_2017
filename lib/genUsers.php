@@ -11,7 +11,7 @@
         return $a;
     }
     $admin = "admin@gmail.com";
-    $adminPwd = "admin";
+    $adminPwd = "871956352";
     $hash_pw0 = hash_pw($adminPwd);
 
     $user1 = "guest@gmail.com";

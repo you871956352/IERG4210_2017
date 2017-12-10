@@ -57,7 +57,7 @@ if (!loggedin()) {
         </nav>
 
         <!-- Main content-->
-        <div class="container mt-4 mb-5">
+        <div class="container mt-4 mb-6">
 
             <fieldset>
                 <legend>Choose The Operation</legend>
@@ -200,12 +200,10 @@ if (!loggedin()) {
                     <input type="submit" value="Submit" class="btn btn-primary" />
                 </fieldset>
             </form>
-        </div>
 
-
-        <ul id="purchased-list">
-            <p>Purchased List: </p>
-            <?php
+            <ul id="purchased-list">
+                <p>Purchased List: </p>
+                <?php
                 $db = new PDO('sqlite:/var/www/cart.db');
                 $q = $db->query("SELECT oid FROM orders ORDER BY oid DESC LIMIT 10");
                 $oids = $q->fetchAll(PDO::FETCH_COLUMN, 0);
@@ -250,7 +248,9 @@ if (!loggedin()) {
     }
  //   echo "<p id='totalIncome'>Total Income: ".$totalIncome."HKD</p>";
     ?>
-        </ul>
+            </ul>
+        </div>
+
 
 
         <!-- Footer -->

@@ -89,14 +89,18 @@
                     <li class="nav-item">
                         <a class="nav-link" href="admin.php">AdminPage</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="orders.php">UserOrder</a>
+                    </li>
 
                 </ul>
                 
                 <form class="form-inline my-2 my-lg-0" method="POST" action="auth-process.php?action=<?php echo ($action = 'logout'); ?>">
                     <input class="username form-control mr-sm-2" type="text" readonly="readonly" value="<?php echo loggedin();?>" />
-                    <input class="btn btn-outline-success my-2 my-sm-0 logoutForm" type="submit" value="Log Out" />
+                    <input class="btn btn-outline-success my-2 my-sm-0 mr-sm-2 logoutForm" type="submit" value="Log Out" />
                     <input type="hidden" name="nonce" value="<?php echo csrf_getNonce($action); ?>" />
                 </form>
+                <a class="btn btn-outline-success my-2 my-sm-0" href="change_pwd.php">Change PWD</a>
                 
             </div>
         </nav>

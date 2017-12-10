@@ -82,14 +82,18 @@
                     <li class="nav-item">
                         <a class="nav-link" href="admin.php">AdminPage</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="orders.php">UserOrder</a>
+                    </li>
 
                 </ul>
 
                 <form class="form-inline my-2 my-lg-0" method="POST" action="auth-process.php?action=<?php echo ($action = 'logout'); ?>">
                     <input class="username form-control mr-sm-2" type="text" readonly="readonly" value="<?php echo loggedin();?>" />
-                    <input class="btn btn-outline-success my-2 my-sm-0 logoutForm" type="submit" value="Log Out" />
+                    <input class="btn btn-outline-success my-2 my-sm-0 mr-sm-2 logoutForm" type="submit" value="Log Out" />
                     <input type="hidden" name="nonce" value="<?php echo csrf_getNonce($action); ?>" />
                 </form>
+                <a class="btn btn-outline-success my-2 my-sm-0" href="change_pwd.php">Change PWD</a>
             </div>
         </nav>
         <!-- Main content-->
@@ -135,13 +139,13 @@
                         </ol>
                         <div class="carousel-inner">
                             <div class="carousel-item active">
-                                <img class="d-block w-100" src="https://placehold.it/900x350" alt="First slide">
+                                <img class="d-block w-100" src="img/slider1.jpg" alt="First slide">
                             </div>
                             <div class="carousel-item">
-                                <img class="d-block w-100" src="https://placehold.it/900x350" alt="Second slide">
+                                <img class="d-block w-100" src="img/slider2.jpg" alt="Second slide">
                             </div>
                             <div class="carousel-item">
-                                <img class="d-block w-100" src="https://placehold.it/900x350" alt="Third slide">
+                                <img class="d-block w-100" src="img/slider3.jpg" alt="Third slide">
                             </div>
                         </div>
                         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -157,15 +161,15 @@
                     <div class="row">
                         <?php
                                     if($catid == null){
-                                        $q = $db->query("SELECT pid FROM products WHERE pid <= 6");
+                                        $q = $db->query("SELECT pid FROM products WHERE pid <= 20");
 				                        $prod_pid = $q->fetchAll(PDO::FETCH_COLUMN, 0);
-                                        $q = $db->query("SELECT catid FROM products WHERE pid <= 6");
+                                        $q = $db->query("SELECT catid FROM products WHERE pid <= 20");
 				                        $prod_catid = $q->fetchAll(PDO::FETCH_COLUMN, 0);
-                                        $q = $db->query("SELECT name FROM products WHERE pid <= 6");
+                                        $q = $db->query("SELECT name FROM products WHERE pid <= 20");
 				                        $prod_name = $q->fetchAll(PDO::FETCH_COLUMN, 0);
-				                        $q = $db->query("SELECT price FROM products WHERE pid <= 6");
+				                        $q = $db->query("SELECT price FROM products WHERE pid <= 20");
 				                        $prod_price = $q->fetchAll(PDO::FETCH_COLUMN, 0);
-                                        $q = $db->query("SELECT description FROM products WHERE pid <= 6");
+                                        $q = $db->query("SELECT description FROM products WHERE pid <= 20");
 				                        $prod_desc = $q->fetchAll(PDO::FETCH_COLUMN, 0);
                                 
                                         for($i = 0,$l=count($prod_pid);$i < $l;$i++){
